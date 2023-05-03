@@ -1,7 +1,11 @@
 #include <pybind11/pybind11.h>
+#include <pybind11/eigen.h>
 #include <vector>
 #include <taskflow/taskflow.hpp>
 #include <taskflow/algorithm/for_each.hpp>
+#include <Eigen/Dense>
+ 
+using Eigen::MatrixXd;
 
 std::vector<double> Mandel(std::vector<double> z, std::vector<double> c) {
     double z_new_re = z[0]*z[0] - z[1]*z[1] + c[0];
@@ -15,12 +19,12 @@ double mag(std::vector<double> z) {
 }
 
 
-std::vector<std::vector<int>> render_set() {
+MatrixXd render_set() {
     int width = 100;
     int height = 100;
 
     std::vector<int> pixel = {0,0,0};
-    std::vector<std::vector<int>> pixel_data(width * height, pixel); 
+    MatrixXd pixel_data(width * height, 3); 
 
     tf::Taskflow taskflow;
     tf::Executor executor;
@@ -53,7 +57,9 @@ std::vector<std::vector<int>> render_set() {
             pixel_color = {1*iter,1*iter,1*iter};
         }
         //std::cout << pixel_color[0] << std::endl;
-        pixel_data[i] = (pixel_color);  
+        pixel_data(i,0) = pixel_color[0];  
+        pixel_data(i,1) = pixel_color[1];  
+        pixel_data(i,2) = pixel_color[2];  
     });
 
 
