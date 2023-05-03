@@ -48,8 +48,8 @@ double mag(std::vector<double> z) {
 
 
 int main() {
-    int width = 3000;
-    int height = 3000;
+    int width = 1000;
+    int height = 1000;
 
     std::vector<int> pixel = {0,0,0};
     std::vector<std::vector<int>> pixel_data(width * height, pixel); 
@@ -70,7 +70,7 @@ int main() {
         std::vector<int> pixel_color;
 
         int iter = 0;
-        int max_iter = 1000;
+        int max_iter = 10000;
         while(iter < max_iter && mag(z) < 1000000000000000000) {
             z = Mandel(z,c);
 
